@@ -41,24 +41,28 @@ d3.json("https://raw.githubusercontent.com/lpang36/news-visualizer/master/data/g
     .selectAll("line")
     .data(graph.edges)
     .enter().append("line")
+      .attr("class","edge")
       .attr("stroke-width", function(d) { return (Math.sqrt(d.value)/factor); })
-      .attr("stroke",function(d) {var c = d3.rgb(255,0,0); c.opacity = d.value/factor/limit; return c;});
+      .attr("stroke",function(d) {var c = d3.rgb(255,0,0); c.opacity = d.value/factor/limit/2; return c;});
 
   var node = g.append("g")
       .attr("class","nodes")
     .selectAll("node")
     .data(graph.nodes)
     .enter().append("g")
+      .attr("class","node")
       .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
           .on("end", dragended));
   
   node.append("circle")
-      .attr("fill", function() {var c = d3.rgb('#ff0000'); c.opacity = 0.8; return c;})
+      .attr("class","circle")
+      .attr("fill", function() {var c = d3.rgb('#ff0000'); c.opacity = 0.5; return c;})
       .attr("r", function(d) {return Math.sqrt(d.size);});
   
   node.append("text")
+      .attr("class","text")
       .attr("font-size","12px")
       .attr("text-anchor", "middle")
       .text(function(d) {return d.label;});
@@ -69,6 +73,44 @@ d3.json("https://raw.githubusercontent.com/lpang36/news-visualizer/master/data/g
 
   simulation.force("link")
       .links(graph.edges);
+  
+  var emphasis = 3
+  
+  d3.selectAll(".node").on('mouseover',function(d) {
+    d3.select(this).selectAll(".circle")
+      .attr("fill",function() {var c = d3.rgb(d3.select(this).attr("fill")); c.opacity = emphasis*c.opacity; return c;})
+    d3.selectAll(".edge").filter(function(data) {return (data.source.id==d.id||data.target.id==d.id);})
+      .attr("stroke",function(data) {var c = d3.rgb(d3.select(this).attr("stroke"));c.opacity = emphasis*c.opacity;return c;})
+  })
+  
+  d3.selectAll(".node").on('mouseout',function(d) {
+    d3.select(this).selectAll(".circle")
+      .attr("fill",function() {var c = d3.rgb(d3.select(this).attr("fill")); c.opacity = c.opacity/emphasis; return c;})
+    d3.selectAll(".edge").filter(function(data) {return (data.source.id==d.id||data.target.id==d.id);})
+      .attr("stroke",function(data) {var c = d3.rgb(d3.select(this).attr("stroke"));c.opacity = c.opacity/emphasis;return c;});
+  })
+  
+  d3.selectAll(".edge").on('mouseover',function(d) {
+    d3.select(this)
+      .attr("stroke",function(data) {var c = d3.rgb(d3.select(this).attr("stroke"));c.opacity = emphasis*c.opacity;return c;})
+    d3.selectAll(".circle").filter(function(data) {return (d.source.id==data.id||d.target.id==data.id);})
+      .attr("fill",function() {var c = d3.rgb(d3.select(this).attr("fill")); c.opacity = emphasis*c.opacity; return c;})
+  })
+  
+  d3.selectAll(".edge").on('mouseout',function(d) {
+    d3.select(this)
+      .attr("stroke",function(data) {var c = d3.rgb(d3.select(this).attr("stroke"));c.opacity = c.opacity/emphasis;return c;})
+    d3.selectAll(".circle").filter(function(data) {return (d.source.id==data.id||d.target.id==data.id);})
+      .attr("fill",function() {var c = d3.rgb(d3.select(this).attr("fill")); c.opacity = c.opacity/emphasis; return c;})
+  })
+  
+  d3.selectAll(".node").on('click',function(d) {
+    console.log('show a side panel')
+  })
+                           
+  d3.selectAll(".edge").on('click',function(d) {
+    console.log('show a side panel')
+  })
 
   function ticked() {
     link
