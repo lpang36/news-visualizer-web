@@ -8,12 +8,12 @@ class Graph extends Component {
       this.createGraph = this.createGraph.bind(this)
    }
    componentDidMount() {
-      this.createGraph()
+      this.createGraph(this)
    }
    componentDidUpdate() {
-      this.createGraph()
+      //this.createGraph(this)
    }
-   createGraph() {
+   createGraph(component) {
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height");
@@ -100,13 +100,27 @@ class Graph extends Component {
       })
 
       d3.selectAll(".node").on('click',function(d) {
-        console.log('show a side panel')
+        var edges = graph.edges.filter((data) => {return (data.source.id===d.id||data.target.id===d.id);})
+        var data = {
+          name: d.id,
+          edges: edges.map((data) => {return {source: data.source.id, target: data.target.id, value: data.value}})
+        }
+        updateSelectedInnerHandler('node',data)
       })
 
       d3.selectAll(".edge").on('click',function(d) {
-        console.log('show a side panel')
+        var data = {
+          source: d.source.id,
+          target: d.target.id,
+          value: d.value
+        }
+        updateSelectedInnerHandler('edge',data)
       })
 
+      function updateSelectedInnerHandler(val,data) {
+        updateSelectedHandler(val,data)
+      }
+      
       function ticked() {
         link
             .attr("x1", function(d) { return (d.source.x); })
@@ -153,8 +167,15 @@ class Graph extends Component {
       d.fx = null;
       d.fy = null;
     }
+     
+    function updateSelectedHandler(val,data) {
+      component.updateSelected(val,data)
+    }
    }
-render() {
+  updateSelected = (val,data) => {
+    this.props.updateSelected(val,data)
+  }
+  render() {
       return <svg ref={node => this.node = node}
       width={this.props.size[0]} height={this.props.size[1]}>
       </svg>
