@@ -9,14 +9,14 @@ class Panel extends Component {
     if (this.props.selected==='node') {
       return (
         <div className='Panel'>
-          <NodePanel data={this.props.data} />
+          <NodePanel data={this.props.data} updateSelected={this.props.updateSelected}/>
         </div>
         );
     }
     else if (this.props.selected==='edge') {
       return (
         <div className='Panel'>
-          <EdgePanel data={this.props.data} />
+          <EdgePanel data={this.props.data} updateSelected={this.props.updateSelected}/>
         </div>
         );
     }

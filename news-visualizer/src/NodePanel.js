@@ -11,10 +11,10 @@ class NodePanel extends Component {
   render() {
     return (
       <div>
-      <NodeTitle data={this.props.data.name} />
-      <Connections data={this.props.data} />
-      <Headlines data={[this.props.data.name]} />
-      <Time data={[this.props.data.name]} />
+      <NodeTitle name={this.props.data.name} size={this.props.data.size}/>
+      <Connections name={this.props.data.name} edges={this.props.data.edges} updateSelected={this.props.updateSelected}/>
+      <Headlines data={this.props.data.articles}/>
+      <Time data={this.props.data.articles}/>
       </div>
       );
   }

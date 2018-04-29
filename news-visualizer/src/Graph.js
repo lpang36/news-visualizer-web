@@ -22,7 +22,7 @@ class Graph extends Component {
         .attr("class", "everything");
 
     var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }).strength(0.01))
+        .force("link", d3.forceLink().id(function(d) { return d.id; }).strength(0.005))
         .force("charge", d3.forceManyBody().strength(-30))
         .force("center", d3.forceCenter(width / 2, height / 2));
     
@@ -100,25 +100,44 @@ class Graph extends Component {
       })
 
       d3.selectAll(".node").on('click',function(d) {
+        /*
         var edges = graph.edges.filter((data) => {return (data.source.id===d.id||data.target.id===d.id);})
         var data = {
           name: d.id,
-          edges: edges.map((data) => {return {source: data.source.id, target: data.target.id, value: data.value}})
+          size: d.size,
+          edges: edges.map((data) => {return {source: data.source.id, target: data.target.id, value: data.value}}),
+          articles: d.articles
         }
         updateSelectedInnerHandler('node',data)
+        */
+        updateSelectedInnerHandler({'selected':'node','node':d.id})
       })
 
       d3.selectAll(".edge").on('click',function(d) {
+        /*
+        var source_dict = {}
+        d.source.articles.forEach((a) => {
+          source_dict[a.url] = true
+        })
+        var articles = []
+        d.target.articles.forEach((a) => {
+          if (a.url in source_dict)
+            articles.push(a)
+        })
         var data = {
           source: d.source.id,
           target: d.target.id,
-          value: d.value
+          value: d.value,
+          articles: articles
         }
-        updateSelectedInnerHandler('edge',data)
+        */
+        updateSelectedInnerHandler({'selected':'edge','source':d.source.id,'target':d.target.id})
       })
 
-      function updateSelectedInnerHandler(val,data) {
-        updateSelectedHandler(val,data)
+      updateSelectedHandler({'graph':graph})
+      
+      function updateSelectedInnerHandler(dict) {
+        updateSelectedHandler(dict)
       }
       
       function ticked() {
@@ -152,7 +171,7 @@ class Graph extends Component {
     }
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(1).restart();
+      if (!d3.event.active) simulation.alphaTarget(5).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -168,12 +187,12 @@ class Graph extends Component {
       d.fy = null;
     }
      
-    function updateSelectedHandler(val,data) {
-      component.updateSelected(val,data)
+    function updateSelectedHandler(dict) {
+      component.updateSelected(dict)
     }
    }
-  updateSelected = (val,data) => {
-    this.props.updateSelected(val,data)
+  updateSelected = (dict) => {
+    this.props.updateSelected(dict)
   }
   render() {
       return <svg ref={node => this.node = node}

@@ -10,9 +10,9 @@ class EdgePanel extends Component {
   render() {
     return (
       <div>
-      <EdgeTitle data={this.props.data} />
-      <Headlines data={[this.props.data.source,this.props.data.target]} />
-      <Time data={[this.props.data.source,this.props.data.target]} />
+      <EdgeTitle data={this.props.data} updateSelected={this.props.updateSelected}/>
+      <Headlines data={this.props.data.articles}/>
+      <Time data={this.props.data.articles}/>
       </div>
       );
   }
