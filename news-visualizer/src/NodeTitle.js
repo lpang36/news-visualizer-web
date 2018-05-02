@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import $ from "jquery";
+import Wiki from './Wiki'
 
 class NodeTitle extends Component {
   render() {
@@ -8,6 +9,7 @@ class NodeTitle extends Component {
       <div>
       <h1>{this.props.name}</h1>
       <p>{this.props.size} articles</p>
+      <Wiki name={this.props.name}/>
       </div>
       );
   }

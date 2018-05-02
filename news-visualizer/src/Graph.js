@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 import * as d3 from 'd3'
 
 class Graph extends Component {
@@ -14,10 +13,10 @@ class Graph extends Component {
       //this.createGraph(this)
    }
    createGraph(component) {
-    var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
-
+    var svg = d3.select("svg")
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+      
     var g = svg.append("g")
         .attr("class", "everything");
 
@@ -111,6 +110,7 @@ class Graph extends Component {
         updateSelectedInnerHandler('node',data)
         */
         updateSelectedInnerHandler({'selected':'node','node':d.id})
+        d3.event.stopPropagation()
       })
 
       d3.selectAll(".edge").on('click',function(d) {
@@ -132,6 +132,11 @@ class Graph extends Component {
         }
         */
         updateSelectedInnerHandler({'selected':'edge','source':d.source.id,'target':d.target.id})
+        d3.event.stopPropagation()
+      })
+      
+      svg.on('click',function(d) {
+        updateSelectedInnerHandler({'selected':'none'})
       })
 
       updateSelectedHandler({'graph':graph})
@@ -195,8 +200,7 @@ class Graph extends Component {
     this.props.updateSelected(dict)
   }
   render() {
-      return <svg ref={node => this.node = node}
-      width={this.props.size[0]} height={this.props.size[1]}>
+      return <svg ref={node => this.node = node}>
       </svg>
    }
 }

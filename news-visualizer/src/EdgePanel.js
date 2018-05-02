@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import EdgeTitle from './EdgeTitle'
 import Headlines from './Headlines'
 import Time from './Time'

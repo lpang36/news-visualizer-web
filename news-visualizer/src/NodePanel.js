@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import NodeTitle from './NodeTitle'
 import Connections from './Connections'
 import Headlines from './Headlines'

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import Graph from './Graph'
 import Panel from './Panel'
 
@@ -68,7 +67,7 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <Graph size={[960,600]} selected={this.state.selected} updateSelected={this.updateSelected}/>
+          <Graph selected={this.state.selected} updateSelected={this.updateSelected}/>
           <div>
           {
             this.state.selected===this.state.data.type ? 

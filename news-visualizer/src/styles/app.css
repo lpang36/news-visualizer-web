@@ -1,0 +1,35 @@
+svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.Panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: block;
+  background-color: white;
+  transition: width 1s;
+}
+
+.Wiki {
+  max-height: 300px;
+  width: 100%;
+  clear: both;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.WikiImg {
+  height: 115px;
+  width: auto;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}

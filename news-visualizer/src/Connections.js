@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 
 class Connections extends Component {
   render() {
@@ -20,7 +19,7 @@ class Connections extends Component {
         this.props.edges.sort(compare_edges).slice(0,10).map((e) => {
           var dest = e.source===this.props.name ? e.target : e.source
           return (
-            <p><a href='#' onClick={() => {this.props.updateSelected({selected:'edge',source:this.props.name,target:dest})}}>{this.props.name} ↔ {dest}</a>: {e.value} articles</p>
+            <p key={dest}><a href='#' onClick={() => {this.props.updateSelected({selected:'edge',source:this.props.name,target:dest})}}>{this.props.name} ↔ {dest}</a>: {e.value} articles</p>
           );
         })
       }
