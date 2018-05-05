@@ -12,8 +12,8 @@ class NodePanel extends Component {
       <div>
       <NodeTitle name={this.props.data.name} size={this.props.data.size}/>
       <Connections name={this.props.data.name} edges={this.props.data.edges} updateSelected={this.props.updateSelected}/>
-      <Headlines data={this.props.data.articles}/>
-      <Time data={this.props.data.articles}/>
+      <Time data={this.props.data.articles} updateIndex = {this.props.updateIndex}/>
+      <Headlines data={this.props.data.articles} index = {this.props.index}/>
       </div>
       );
   }

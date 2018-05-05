@@ -200,7 +200,7 @@ class Graph extends Component {
     this.props.updateSelected(dict)
   }
   render() {
-      return <svg ref={node => this.node = node}>
+      return <svg ref={node => this.node = node} id='graph'>
       </svg>
    }
 }

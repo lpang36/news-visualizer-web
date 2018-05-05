@@ -6,7 +6,7 @@ class Headlines extends Component {
     return (
       <div>
       {
-        this.props.data.slice(0,10).map((a) => {
+        this.props.data.slice(this.props.index,this.props.index+10).map((a) => {
          return (
          <div key={a.url}>
           <a href={a.url} target='_blank'>{a.title}</a>
