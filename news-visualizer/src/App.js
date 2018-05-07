@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import Graph from './Graph'
 import Panel from './Panel'
+import Overview from './Overview'
+import $ from "jquery";
 
 class App extends Component {
   constructor() {
@@ -11,6 +13,8 @@ class App extends Component {
       node:'',
       source:'',
       target:'',
+      all_nodes:[],
+      top_edges:[],
       graph:{},
       data:{'type':'none'}
     }
@@ -62,6 +66,28 @@ class App extends Component {
       }
       this.setState({'data':data})
     }
+    if ($.isEmptyObject(prevState.graph)&&!$.isEmptyObject(this.state.graph)) {
+      function compare_nodes(a,b) {
+        if (a.value > b.value) {
+        return -1;
+        }
+        if (a.value < b.value) {
+          return 1;
+        }
+        return 0;
+      }
+      this.setState({'all_nodes':this.state.graph.nodes.map((n) => {return {text:n.id,value:n.size}}).sort(compare_nodes)})
+      function compare_edges(a,b) {
+        if (a.value > b.value) {
+        return -1;
+        }
+        if (a.value < b.value) {
+          return 1;
+        }
+        return 0;
+      }
+      this.setState({'top_edges':this.state.graph.edges.map((e) => {return {source:e.source.id,target:e.target.id,value:e.value}}).sort(compare_edges).slice(0,5)})
+    }
   }
   render() {
     return (
@@ -75,6 +101,7 @@ class App extends Component {
             (<Panel selected='none' data={this.state.data} updateSelected={this.updateSelected}/>)
           } 
           </div>
+          <Overview nodes={this.state.all_nodes} edges={this.state.top_edges} updateSelected={this.updateSelected} /> 
         </div>
       </div>
     );

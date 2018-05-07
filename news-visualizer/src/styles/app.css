@@ -6,16 +6,23 @@
   width: 100%;
 }
 
-.Panel {
+.Panel, .Overview {
   position: fixed;
   top: 0;
-  left: 0;
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   display: block;
   background-color: white;
+}
+
+.Panel {
+  left: 0;
   transition: width 1s;
+}
+
+.Overview {
+  right: 0;
 }
 
 .Wiki {

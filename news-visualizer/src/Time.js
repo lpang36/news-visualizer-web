@@ -24,9 +24,12 @@ class Time extends Component {
     }
     var today = new Date() 
     var max = 0
+    function mod(n,m) { //positive moduli only
+      return ((n%m)+m)%m
+    }
     this.props.data.forEach((article) => {
       var time = new Date(article.time)
-      var i = (today.getDay()-time.getDay())%7
+      var i = mod((today.getDay()-time.getDay()),7)
       var j = Math.floor(time.getHours()/4)
       if (array[i*6+j].value===0) {
         array[i*6+j].index = count
