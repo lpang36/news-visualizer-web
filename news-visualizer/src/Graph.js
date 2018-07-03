@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
+import $ from "jquery";
 
 class Graph extends Component {
    constructor(props){
@@ -24,6 +25,11 @@ class Graph extends Component {
         .force("link", d3.forceLink().id(function(d) { return d.id; }).strength(0.005))
         .force("charge", d3.forceManyBody().strength(-30))
         .force("center", d3.forceCenter(width / 2, height / 2));
+     
+    var READ_URL = 'insert lambda url here'
+    // $.post(READ_URL,{'q':this.props.query},function(data) {
+    //   //process graph here
+    // });
     
     fetch('https://raw.githubusercontent.com/lpang36/news-visualizer/master/data/graph.json').then((res)=>res.json()).then((graph)=>{
       var factor = 1

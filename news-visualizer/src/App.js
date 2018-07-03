@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import logo from './logo.svg';
 import Graph from './Graph'
 import Panel from './Panel'
 import Overview from './Overview'
+import Home from './Home'
 import $ from "jquery";
 
 class App extends Component {
@@ -89,11 +91,15 @@ class App extends Component {
       this.setState({'top_edges':this.state.graph.edges.map((e) => {return {source:e.source.id,target:e.target.id,value:e.value}}).sort(compare_edges).slice(0,5)})
     }
   }
+  returnToHome() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+    ReactDOM.render(<Home/>,document.getElementById('root'))
+  }
   render() {
     return (
       <div className="App">
         <div>
-          <Graph selected={this.state.selected} updateSelected={this.updateSelected}/>
+          <Graph selected={this.state.selected} updateSelected={this.updateSelected} query={this.props.query}/>
           <div>
           {
             this.state.selected===this.state.data.type ? 
@@ -101,7 +107,8 @@ class App extends Component {
             (<Panel selected='none' data={this.state.data} updateSelected={this.updateSelected}/>)
           } 
           </div>
-          <Overview nodes={this.state.all_nodes} edges={this.state.top_edges} updateSelected={this.updateSelected} /> 
+          <Overview nodes={this.state.all_nodes} edges={this.state.top_edges} updateSelected={this.updateSelected} />
+          <input type="image" className="HomeButton" onClick={this.returnToHome} src='https://image.flaticon.com/icons/svg/23/23665.svg'></input>
         </div>
       </div>
     );
