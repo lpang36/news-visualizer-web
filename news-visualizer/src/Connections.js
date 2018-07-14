@@ -18,7 +18,7 @@ class Connections extends Component {
       {
         this.props.name ?
         (<p>{this.props.edges.length} connections</p>) :
-        (<p></p>)
+        (<div></div>)
       }
       </div>
       {
@@ -26,12 +26,16 @@ class Connections extends Component {
           if (this.props.name) {
             var dest = e.source===this.props.name ? e.target : e.source
             return (
-              <p key={dest}><a href='#' onClick={() => {this.props.updateSelected({selected:'edge',source:this.props.name,target:dest})}}>{this.props.name} ↔ {dest}</a>: {e.value} articles</p>
+              <div className='line' onClick={() => {this.props.updateSelected({selected:'edge',source:this.props.name,target:dest})}}>
+              <p key={dest} className='main'><a href='#' >{this.props.name} ↔ {dest}</a></p><p className='sub'>{e.value} articles</p>
+              </div>
             );
           }
           else {
             return (
-              <p key={e.source}><a href='#' onClick={() => {this.props.updateSelected({selected:'edge',source:e.source,target:e.target})}}>{e.source} ↔ {e.target}</a>: {e.value} articles</p>
+              <div className='line' onClick={() => {this.props.updateSelected({selected:'edge',source:e.source,target:e.target})}}>
+              <p key={e.source} className='main'><a href='#' >{e.source} ↔ {e.target}</a></p><p className='sub'>{e.value} articles</p>
+              </div>
             );
           }
         })

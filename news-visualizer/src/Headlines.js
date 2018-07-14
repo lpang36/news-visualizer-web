@@ -8,9 +8,8 @@ class Headlines extends Component {
       {
         this.props.data.slice(this.props.index,this.props.index+10).map((a) => {
          return (
-         <div key={a.url}>
+         <div key={a.url} class='article'>
           <a href={a.url} target='_blank'>{a.title}</a>
-          <p>{a.time}</p>
          </div>
          );
         })

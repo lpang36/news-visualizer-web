@@ -5,16 +5,16 @@ import $ from "jquery";
 
 class Home extends Component {
   handleClick() {
-    var query = document.getElementById("SearchString").value
+    var query = document.getElementById("namanyay-search-box").value
     ReactDOM.unmountComponentAtNode(document.getElementById('root'))
     ReactDOM.render(<App query={query}/>,document.getElementById('root'))
   }
   render() {
     return (
       <div className="Home">
-        <p>Enter a query: </p>
-        <input type="text" id="SearchString"></input>
-        <button id="SearchButton" onClick={this.handleClick}>Search</button>
+        <p>enter a topic</p>
+        <input type="text" id="namanyay-search-box"></input>
+        <button id="namanyay-search-btn" onClick={this.handleClick}>search</button>
       </div>
     )
   }

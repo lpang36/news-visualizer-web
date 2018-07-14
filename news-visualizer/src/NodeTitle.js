@@ -7,7 +7,7 @@ class NodeTitle extends Component {
   render() {
     return (
       <div>
-      <h1>{this.props.name}</h1>
+      <h2>{this.props.name}</h2>
       <p>{this.props.size} articles</p>
       <Wiki name={this.props.name}/>
       </div>

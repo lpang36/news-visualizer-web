@@ -16,19 +16,22 @@ class Overview extends Component {
       })
       return (
         <div className='Overview'>
+          <h2>top topics</h2>
           <div>
           {
             this.props.nodes.slice(0,5).map((n) => {
               return (
-                <div key={n.text}>
-                  <p><a href='#' onClick={() => {this.props.updateSelected({selected:'node',node:n.text})}}>{n.text}</a>: {n.value} articles</p>
+                <div key={n.text} className='line' onClick={() => {this.props.updateSelected({selected:'node',node:n.text})}}>
+                  <p className='main'><a href='#' >{n.text}</a></p><p className='sub'>{n.value} articles</p>
                 </div>
               )
             })
           }
           </div>
+          <h2>top connections</h2>
           <Connections edges={this.props.edges} updateSelected={this.props.updateSelected} limit={5}/>
-          <WordCloud data={this.props.nodes} fontSizeMapper={(d) => {return (Math.log2(d.value)/Math.log2(max)*50)}} rotate={0} width={400} height={300}/>
+          <h2>word cloud</h2>
+          <WordCloud data={this.props.nodes} fontSizeMapper={(d) => {return (Math.log2(d.value)/Math.log2(max)*50)}} rotate={0} width={350} height={250}/>
         </div>
       );
     }
