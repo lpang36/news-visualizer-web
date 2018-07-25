@@ -26,12 +26,8 @@ class Graph extends Component {
         .force("charge", d3.forceManyBody().strength(-30))
         .force("center", d3.forceCenter(width / 2, height / 2));
      
-    var READ_URL = 'insert lambda url here'
-    // $.post(READ_URL,{'q':this.props.query},function(data) {
-    //   //process graph here
-    // });
-    
-    fetch('https://raw.githubusercontent.com/lpang36/news-visualizer/master/data/graph.json').then((res)=>res.json()).then((graph)=>{
+    var READ_URL = 'https://214w2l4v4a.execute-api.us-east-2.amazonaws.com/alpha/read'
+    $.post(READ_URL,JSON.stringify({"q":this.props.query}),function(graph) {
       var factor = 1
       graph.edges = graph.edges.map(function(d) {d.value = factor*d.value; return d})
       var limit = Math.max.apply(Math,graph.edges.map(function (d) {return d.value}))
